@@ -1,9 +1,17 @@
 <?php
 
 session_start();
-require __DIR__.'/config/config.php';
+require __DIR__ . '/config/config.php';
 
-foreach(glob(BASEDIR.'/helpers/*.php') as $file){
+if (DEV_MODE == true) {
+    error_reporting(E_ALL);
+    ini_set('error_reporting', true);
+}else{
+    error_reporting(0);
+    ini_set('error_reporting', false);
+}
+
+foreach (glob(BASEDIR . '/helpers/*.php') as $file) {
     require $file;
 }
 
@@ -22,20 +30,15 @@ if (isset($result['lang'])) {
     }
 }
 
-if(isset($result['route'])){
-    $config['route'] = explode('/',$result['route']);
-}else{
-
+if (isset($result['route'])) {
+    $config['route'] = explode('/', $result['route']);
+} else {
 }
-
-if(file_exists(BASEDIR.'/Controller/'.$config['route'][0].'.php')){
-    require BASEDIR.'/Controller/'.$config['route'][0].'.php';
-}else{
-    echo "Sayfa Bulunamadı";
-}
-
-
-
-
 
 require BASEDIR . '/language/' . $config['lang'] . '.php';
+
+if (file_exists(BASEDIR . '/Controller/' . $config['route'][0] . '.php')) {
+    require BASEDIR . '/Controller/' . $config['route'][0] . '.php';
+} else {
+    echo "Sayfa Bulunamadı";
+}

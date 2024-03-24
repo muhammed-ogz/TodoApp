@@ -8,11 +8,12 @@
         <div class="card">
             <div class="card-body login-card-body">
                 <p class="login-box-msg"><?= lang('Lütfen Giriş Yapınız'); ?></p>
-
+                <?php 
+                    echo get_session('error') != false ? '<div class ="alert alert-'.$_SESSION['error']['type'].'" >'.$_SESSION['error']['message'].'</div>' : null;
+                ?>
                 <form action="<?php URL.'login' ; ?>" method="post">
                     <div class="input-group mb-3">
-                        <?= get_session('hata'); ?>
-                        <input type="email" name="email" class="form-control" placeholder="<?= lang('E-posta'); ?>">
+                        <input type="email" name="email" value="<?= $_SESSION['post']['email'] ?? '' ?>" class="form-control" placeholder="<?= lang('E-posta'); ?>">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -20,7 +21,7 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" name="password" class="form-control" placeholder="<?= lang('Şifre'); ?>">
+                        <input type="password" name="password" value="<?= $_SESSION['post']['password'] ?? '' ?>" class="form-control" placeholder="<?= lang('Şifre'); ?>">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>

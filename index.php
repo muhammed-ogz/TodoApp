@@ -6,7 +6,7 @@ require __DIR__ . '/config/config.php';
 if (DEV_MODE == true) {
     error_reporting(E_ALL);
     ini_set('error_reporting', true);
-}else{
+} else {
     error_reporting(0);
     ini_set('error_reporting', false);
 }
@@ -42,3 +42,6 @@ if (file_exists(BASEDIR . '/Controller/' . $config['route'][0] . '.php')) {
 } else {
     echo "Sayfa Bulunamadı";
 }
+
+if (isset($_SESSION['error'])) $_SESSION['error'] = null;
+if (isset($_SESSION['post'])) $_SESSION['post'] = null;

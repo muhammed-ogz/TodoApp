@@ -14,6 +14,19 @@ function view($viewName, $pagedata = [])
     else return false;
 }
 
+function model($modelName, $pagedata = [], $data_proccess = NULL)
+{
+    global $db;
+    if ($data_proccess != NULL) $proccess = $data_proccess;
+    $data = $pagedata;
+
+    if (file_exists(BASEDIR.'/model/'.$modelName.'.php')) {
+        $return = require BASEDIR.'/model/'.$modelName.'.php';
+        return $return;
+    }
+    else return false;
+}
+
 function assets($assetName)
 {
     if (file_exists(BASEDIR . '/public/' . $assetName)) return URL . 'public/' . $assetName;
@@ -56,4 +69,14 @@ function get_cookie($index)
 {
     if (isset($_COOKIE[$index])) return trim($_COOKIE[$index]);
     else return false;
+}
+
+function redirect ($link){
+    header('Location:'.URL.$link);
+}
+
+function url($url){
+     global $config;
+
+     return URL.$config['lang'].'/'.$url;
 }

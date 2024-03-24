@@ -1,17 +1,33 @@
 <?php
 
-if(route(0) == 'login'){
+if(get_session('login') && get_session('login') == true) redirect('home');
 
-    if(isset($_POST['submit']))
-    {
-        add_session('hata','mesajınız eklendi');
+if (route(0) == 'login') {
+
+    if (isset($_POST['submit'])) {
+        //parola yanlış girilirse en son girilen değerleri ekranda tutmak için.
+        $_SESSION['post'] = $_POST;
+        add_session('hata', 'mesajınız eklendi');
         $email = post('email');
+
+
+
         $password = post('password');
 
-        echo $email.' '.$password;
+        $return = model('auth/login', ['email' => $email, 'password' => $password], 'login');
 
+        if ($return['success'] == true) {
+
+            if (isset($return['redirect'])) {
+                redirect($return['redirect']);
+            }
+        } else {
+            add_session('error', [
+                'message' => $return['message'] ?? '',
+                'type' => $return['type'] ?? ''
+            ]);
+        }
     }
 
     view('auth/login');
-
 }

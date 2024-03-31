@@ -7,13 +7,8 @@ if (route(0) == 'login') {
     if (isset($_POST['submit'])) {
         //parola yanlış girilirse en son girilen değerleri ekranda tutmak için.
         $_SESSION['post'] = $_POST;
-        add_session('hata', 'mesajınız eklendi');
         $email = post('email');
-
-
-
         $password = post('password');
-
         $return = model('auth/login', ['email' => $email, 'password' => $password], 'login');
 
         if ($return['success'] == true) {

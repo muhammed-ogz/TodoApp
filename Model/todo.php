@@ -21,7 +21,7 @@ if ($proccess == 'list') {
     }
 }
 elseif ($proccess == 'getsingle'){
-    $id => $data['id'];
+    $id = $data['id'];
     $user_id = get_session('id');
 
     $q = $db->prepare("SELECT * FROM todos WHERE todos.id=? && todos.user_id =?");

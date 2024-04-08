@@ -9,8 +9,7 @@
             <div class="navbar-search-block">
                 <form class="form-inline">
                     <div class="input-group input-group-sm">
-                        <input class="form-control form-control-navbar" type="search" placeholder="Search"
-                               aria-label="Search">
+                        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
                         <div class="input-group-append">
                             <button class="btn btn-navbar" type="submit">
                                 <i class="fas fa-search"></i>
@@ -46,45 +45,40 @@
                                         <label for="title">Please category select</label>
                                         <select class="form-control" id="category_id">
                                             <option value="0"> Please category select </option>
-                                            <?php foreach ($data as $category):?>
-                                            <option value="<?= $category['category_id'] ?>"><?= $category['name'] ?></option>
+                                            <?php foreach ($data as $category) : ?>
+                                                <option value="<?= $category['id'] ?>"><?= $category['title'] ?></option>
                                             <?php endforeach; ?>
-<!--                                        <option value="AHSENİ ÇOK SEVİYORUM"> Please category select </option>-->
+                                            <!--                                        <option value="AHSENİ ÇOK SEVİYORUM"> Please category select </option>-->
                                         </select>
-                                    </div><div class="form-group">
+                                    </div>
+                                    <div class="form-group">
                                         <label for="title">Title</label>
-                                        <input type="text" class="form-control" name="title" id="title"
-                                               placeholder="Please add todo title">
+                                        <input type="text" class="form-control" name="title" id="title" placeholder="Please add todo title">
                                     </div>
                                     <div class="form-group">
                                         <label for="title">Description</label>
-                                        <input type="text" class="form-control" name="description" id="description"
-                                               placeholder="Please add todo title">
+                                        <input type="text" class="form-control" name="description" id="description" placeholder="Please add todo title">
                                     </div>
                                     <div class="form-group">
                                         <label for="title">Color</label>
-                                        <input type="color" class="form-control" name="color" value="#007bff"
-                                               id="color">
+                                        <input type="color" class="form-control" name="color" value="#007bff" id="color">
                                     </div>
                                     <div class="form-group">
                                         <label for="title">Started Date</label>
                                         <div class="row">
-                                            <input type="date" class="form-control col-8" name="start_date"
-                                                   id="start_date">
-                                            <input type="time" class="form-control col-4" name="start_date_time"
-                                                   id="start_date_time">
+                                            <input type="date" class="form-control col-8" name="start_date" id="start_date">
+                                            <input type="time" class="form-control col-4" name="start_date_time" id="start_date_time">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="title">End Date</label>
                                         <div class="row">
                                             <input type="date" class="form-control col-8" name="end_date" id="end_date">
-                                            <input type="time" class="form-control col-4" name="end_date_time"
-                                                   id="end_date_time">
+                                            <input type="time" class="form-control col-4" name="end_date_time" id="end_date_time">
                                         </div>
                                     </div>
                                     <div class="card-footer">
-                                        <button type="submit" name="submit" value="1" class="btn btn-primary">Submit
+                                        <button type="submit" name="submit" value="1" class="btn btn-primary">Add Todo
                                         </button>
                                     </div>
                                 </div>
@@ -106,9 +100,7 @@
 <script src="<?= assets('plugins/sweetalert2/sweetalert2.all.js'); ?>"></script>
 <script src="<?= assets('plugins/sweetalert2/sweetalert2.js'); ?>"></script>
 <script src="<?= assets('js/adminlte.min.js'); ?>"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js"
-        integrity="sha512-PJa3oQSLWRB7wHZ7GQ/g+qyv6r4mbuhmiDb8BjSFZ8NZ2a42oTtAq5n0ucWAwcQDlikAtkub+tPVCw4np27WCg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js" integrity="sha512-PJa3oQSLWRB7wHZ7GQ/g+qyv6r4mbuhmiDb8BjSFZ8NZ2a42oTtAq5n0ucWAwcQDlikAtkub+tPVCw4np27WCg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     const todo = document.getElementById('todo');
 
@@ -127,6 +119,7 @@
 
         formData.append('title', title);
         formData.append('description', description);
+        formData.append('category_id', category_id);
         formData.append('color', color);
         formData.append('start_date', start_date);
         formData.append('end_date', end_date);
@@ -135,11 +128,17 @@
 
         axios.post('<?= url('api/addtodo') ?>', formData).then(res => {
 
-            swal.fire(
-                res.data.title,
-                res.data.msg,
-                res.data.status,
-        )
+            if (res.data.redirect) {
+                window.location.href = res.data.redirect;
+            } else {
+                swal.fire(
+                    res.data.title,
+                    res.data.msg,
+                    res.data.status,
+                );
+            }
+
+
             console.log(res)
         }).catch(err => console.log(err))
 

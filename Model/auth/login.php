@@ -19,7 +19,7 @@ if ($proccess == 'login') {
         ];
     }
 
-
+ 
     $email = $data['email'];
     $password = md5($data['password']);
     $q = $db->prepare("SELECT *, CONCAT(name,' ',surname) as fullname FROM users WHERE email=? && password=?");

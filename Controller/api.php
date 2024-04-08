@@ -1,9 +1,10 @@
 <?php
 
-if (route(1) == 'addtodo'){
+if (route(1) == 'addtodo') {
     $post = filter($_POST);
-
-    if(!$post['title']){
+    $start_date = date('Y-m-d H:i:s');
+    $end_date = date('Y-m-d H:i:s');
+    if (!$post['title']) {
 
         $status = 'error';
         $title = 'Ops! Warning';
@@ -11,7 +12,7 @@ if (route(1) == 'addtodo'){
         echo json_encode(['status' => $status, 'title' => $title, 'msg' => $msg]);
         exit();
     }
-    if(!$post['description']){
+    if (!$post['description']) {
 
         $status = 'error';
         $title = 'Ops! Warning';
@@ -19,6 +20,27 @@ if (route(1) == 'addtodo'){
         echo json_encode(['status' => $status, 'title' => $title, 'msg' => $msg]);
         exit();
     }
+    if ($post['start_date_time'] && $post['start_date']) {
+        $start_date = $post['start_date'] . ' ' . $post['start_date_time'];
+    }
+    if ($post['end_date_time'] && $post['end_date']) {
+        $end_date = $post['end_date'] . ' ' . $post['end_date_time'];
+    }
+
+    if ($post['category_id']) {
+        $user_id = get_session('id');
+        $c_id = $post['category_id'];
+        $q = $db->query("SELECT id FROM categories WHERE user_id= '$user_id' && categories.id='$c_id'");
+        $c = $q->fetch(PDO::FETCH_ASSOC);
+        if (!$c){
+            $status = 'error';
+            $title = 'Ops! Dikkat';
+            $msg = 'Sadece oluşturduğunuz kategoriler için ekleme yapabilirsiniz.';
+            echo json_encode(['status' => $status, 'title' => $title, 'msg' => $msg]);
+            exit();
+        }
+    }
+
 
     $q = $db->prepare("INSERT INTO todos SET 
               todos.title=?, 
@@ -33,24 +55,23 @@ if (route(1) == 'addtodo'){
         $post['title'],
         $post['description'],
         $post['color'] ?? '#007bff',
-        $post['start_date'] ?? date('Y-m-d H:i:s'),
-        $post['end_date'] ?? NULL,
+        $start_date,
+        $end_date,
         $post['category_id'] ?? 0,
         get_session('id')
     ]);
 
-    if($insert){
+    if ($insert) {
         $status = 'success';
         $title = 'Success !';
         $msg = 'Todo add process successfully.';
-        echo json_encode(['status' => $status, 'title' => $title, 'msg' => $msg]);
+        echo json_encode(['status' => $status, 'title' => $title, 'msg' => $msg, 'redirect' => url('todo/list')]);
         exit();
-    }else{
+    } else {
         $status = 'error';
         $title = 'Ops! Warning';
         $msg = 'An Unknown Error occurred.';
         echo json_encode(['status' => $status, 'title' => $title, 'msg' => $msg]);
         exit();
     }
-
 }

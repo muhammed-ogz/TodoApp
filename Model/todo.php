@@ -19,27 +19,29 @@ if ($proccess == 'list') {
             'data' => []
         ];
     }
-}
-elseif ($proccess == 'getsingle'){
+} elseif ($proccess == 'getsingle') {
     $id = $data['id'];
     $user_id = get_session('id');
+    $q = $db->query("SELECT * FROM categories WHERE user_id = '$user_id'");
+    $category = $q->fetchAll(PDO::FETCH_ASSOC);
 
-    $q = $db->prepare("SELECT * FROM todos WHERE todos.id=? && todos.user_id =?");
+
+    $user_id = get_session('id');
+
+    $q = $db->prepare("SELECT * FROM todos WHERE todos.id=? && todos.user_id=?");
     $q->execute([$id, get_session('id')]);
 
-    if ($q->rowCount()){
+    if ($q->rowCount()) {
         return [
             'success' => true,
             'type' => 'success',
             'data' => array_merge($q->fetch(PDO::FETCH_ASSOC), ['categories' => $category])
         ];
-    }
-    else {
+    } else {
         return [
             'success' => true,
             'type' => 'success',
             'data' => []
         ];
     }
-
 }

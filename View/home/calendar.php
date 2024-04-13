@@ -27,38 +27,29 @@
     <?php view('static/sidebar'); ?>
     <div class="content-wrapper p-3">
         <div class="content">
-            <div class="container-fluid">
-                <h5 class="mt-4 mb-2"> Your current status <code><?= date('Y-m-d')?></code></h5>
-            <div class="row">
-              <?php foreach($data as $row): ?> 
-          <div class="col-md-4 col-sm-6 col-12">
-            <div class="info-box bg-<?= status($row['status'])['color'] ?>">
-              <span class="info-box-icon"><i class="<?= status($row['status'])['icon'] ?>"></i></span>
+            <div id="calendar">
 
-              <div class="info-box-content">
-                <span class="info-box-text"><?= status($row['status'])['title'] ?></span>
-                <span class="info-box-number"><?= $row['toplam']?></span>
-
-                <div class="progress">
-                  <div class="progress-bar" style="width: 70%"></div>
-                </div>
-                <span class="progress-description">
-                  <?= number_format($row['yuzde'])?>% of the <?= $row['toplam']?> todos <?= status($row['status'])['statusmsg'] ?>
-                </span>
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </div>
-          <?php endforeach; ?>
-        </div>
             </div>
         </div>
     </div>
     <?php view('static/footer'); ?>
 </div>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            locale: '<?= defaultLang(); ?>',
+            events: '<?= url('api/calendar')?>'
+        });
+        calendar.render();
+    });
+</script>
 <script src="<?= assets('plugins/jquery/jquery.min.js'); ?>"></script>
 <script src="<?= assets('plugins/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
+<script src="<?= assets('plugins/fullcalendar/locales-all.js'); ?>"></script>
+<script src="<?= assets('plugins/fullcalendar/main.js'); ?>"></script>
 <script src="<?= assets('js/adminlte.min.js'); ?>"></script>
 </body>
 

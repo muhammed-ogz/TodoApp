@@ -78,8 +78,7 @@ if (route(1) == 'addtodo') {
         echo json_encode(['status' => $status, 'title' => $title, 'msg' => $msg]);
         exit();
     }
-}
-if (route(1) == 'edittodo') {
+} elseif (route(1) == 'edittodo') {
     $post = filter($_POST);
     $start_date = date('Y-m-d H:i:s');
     $end_date = date('Y-m-d H:i:s');
@@ -192,4 +191,20 @@ if (route(1) == 'edittodo') {
         echo json_encode(['status' => $status, 'title' => $title, 'msg' => $msg]);
         exit();
     }
+} elseif (route(1) == 'calendar') {
+
+    $start = get('start');
+    $end = get('end');
+    $sql = "SELECT id, title,color, start_date as start, end_date as end, CONCAT('/todoapp/todo/edit/',todos.id) as url FROM todos WHERE todos.user_id =?";
+
+    if ($start && $end) {
+        $sql .= " && start_date BETWEEN '$start' AND '$end' OR end_date BETWEEN' $start' AND '$end'";
+    }
+
+    $q = $db->prepare($sql);
+    $q->execute([get_session('id')]);
+    $array = $q->fetchAll(PDO::FETCH_ASSOC);
+
+
+    echo json_encode($array);
 }

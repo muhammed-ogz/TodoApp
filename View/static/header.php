@@ -12,6 +12,7 @@
     <link rel="stylesheet" href=" <?= assets('plugins/fontawesome-free/css/all.min.css'); ?>">
     <!-- Theme style -->
     <link rel="stylesheet" href=" <?= assets('css/adminlte.min.css'); ?>">
+    <link rel="stylesheet" href=" <?= assets('plugins/fullcalendar/main.css'); ?>">
 </head>
 
 <body class="hold-transition sidebar-mini">

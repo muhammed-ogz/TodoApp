@@ -80,7 +80,7 @@
                                             </td>
                                             </td>
                                             <td>
-                                                <span class="badge bg-<?= $value['status'] == 'a' ? 'success' : 'danger'; ?>"><?= $value['status'] == 'a' ? 'Active' : 'Deactive'; ?></span>
+                                                <span class="badge bg-<?= status($value['status'])['color']; ?>"><?= status($value['status'])['title'] ?></span>
                                             </td>
                                             <td>
                                                 <div class="btn-group btn-group-sm">

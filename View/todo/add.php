@@ -64,6 +64,7 @@
                                         <select id="status">
                                                 <option value="a">Active</option>
                                                 <option value="p">Deactive</option>
+                                                <option value="s">In the process</option>
                                         </select>
                                     </div>
                                     <div class="form-group">

@@ -89,7 +89,7 @@
                             <!-- END timeline item -->
                             <!-- timeline time label -->
                             <div class="time-label">
-                                <span class="bg-green">3 Jan. 2014</span>
+                                <span class="bg-green"><?= date('d-m-Y'); ?></span>
                             </div>
                             <div>
                                 <i class="fas fa-clock bg-gray"></i>

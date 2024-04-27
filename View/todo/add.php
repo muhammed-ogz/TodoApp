@@ -48,7 +48,6 @@
                                             <?php foreach ($data as $category) : ?>
                                                 <option value="<?= $category['id'] ?>"><?= $category['title'] ?></option>
                                             <?php endforeach; ?>
-                                            <!--                                        <option value="AHSENİ ÇOK SEVİYORUM"> Please category select </option>-->
                                         </select>
                                     </div>
                                     <div class="form-group">

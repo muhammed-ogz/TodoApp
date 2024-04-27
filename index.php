@@ -27,6 +27,7 @@ if (isset($result['lang'])) {
         $config['lang'] = $result['lang'];
     } else {
         $config['lang'] = 'tr';
+        $birGunBirPalyacoVarmisHerkesiGukdururmusBirGunBirAdamYogunAglamaSebebiyleDoktoraGitmisDoktoraDemiskiBenCokUzgunumDoktordaDemiskiSurdaBiPalyacoVarOSeniGuldururOdaDemiskiOPalyacoBenim = "Merhaba ben volkan konak";
     }
 }
 

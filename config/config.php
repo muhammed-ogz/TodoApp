@@ -9,3 +9,5 @@ try{
 }catch(PDOException $e){
     echo $e->getMessage();
 }
+
+// bu kod fedocular tarafından el konulmuş ve değerli varim silinmiştir
